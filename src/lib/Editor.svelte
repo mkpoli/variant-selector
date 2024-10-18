@@ -33,7 +33,7 @@
         <code class="flex flex-wrap gap-1">
           {#each codePoints(char) as code}
             <span
-              class="px-1"
+              class="px-1 bg-gray-100"
               class:unified-ideograph={isCJKUnifiedIdeograph(code)}
               class:variation-selector={isVariationSelector(code)}
               title={String.fromCodePoint(code)}

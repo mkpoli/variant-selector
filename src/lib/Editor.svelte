@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { segment } from '$lib/text';
+
   let { text = $bindable(), selectedText = $bindable() }: { text: string; selectedText: string } = $props();
   let selection = $state<{ start: number; end: number } | null>(null);
 
@@ -7,8 +9,6 @@
   });
 
   $inspect('selectedText', selectedText);
-
-  const segmenter = new Intl.Segmenter('ja', { granularity: 'grapheme' });
 </script>
 
 <textarea
@@ -17,15 +17,15 @@
   onselectionchange={(e) => (selection = { start: e.currentTarget.selectionStart, end: e.currentTarget.selectionEnd })}
 ></textarea>
 <output class="h-full">
-  {#each segmenter.segment(text) as segment}
+  {#each segment(text) as seg}
     <span
       class="hover:bg-green-200/50"
-      title={[...segment.segment]
+      title={[...seg]
         .map((char) => char.codePointAt(0))
         .map((code) => (code ? `U+${code.toString(16).toUpperCase()}` : ''))
         .join(' ')}
     >
-      {segment.segment}
+      {seg}
     </span>
   {/each}
 </output>

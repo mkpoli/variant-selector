@@ -1,6 +1,7 @@
 <script lang="ts">
   import { codePoints, formatCodePoint, segment } from '$lib/text';
   import Copy from '~icons/material-symbols/content-copy-outline';
+  import Close from '~icons/material-symbols/close-small-outline';
   import type { Editor } from '$lib/editor.svelte';
   import { isCJKUnifiedIdeograph, isVariationSelector } from './unicode';
 
@@ -28,18 +29,23 @@
   </div>
   <output class="h-full min-w-48 overflow-y-auto max-h-[50dvh]">
     <div class="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 mx-auto">
-      {#each segment(editor.selectedText || editor.text) as char}
+      {#each segment(editor.selectedText || editor.text) as char, i}
         <span class="font-jigmo">{char}</span>
         <code class="flex flex-wrap gap-1">
-          {#each codePoints(char) as code}
-            <span
-              class="px-1 bg-gray-100"
+          {#each codePoints(char) as code, j}
+            <div
+              class="px-1 bg-gray-100 flex items-center"
               class:unified-ideograph={isCJKUnifiedIdeograph(code)}
               class:variation-selector={isVariationSelector(code)}
               title={String.fromCodePoint(code)}
             >
               {formatCodePoint(code)}
-            </span>
+              <button
+                class="w-4 h-4 hover:bg-white/50 rounded-full flex items-center justify-center"
+                onclick={() => editor.removeCharPointAtCluster(i, j)}
+                ><Close />
+              </button>
+            </div>
           {/each}
         </code>
       {/each}

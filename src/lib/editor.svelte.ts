@@ -1,9 +1,14 @@
+import { segment } from './text';
+
 export interface Editor {
   text: string;
   selection: { start: number; end: number } | null;
   selectedText: string;
-  replaceSelectedText: (text: string) => void;
   textarea: HTMLTextAreaElement | undefined;
+
+  replaceSelectedText: (text: string) => void;
+  removeCharPointAt: (index: number) => void;
+  removeCharPointAtCluster: (clusterIndex: number, charPointIndex: number) => void;
 }
 
 export function createEditor(initialText: string): Editor {
@@ -61,6 +66,27 @@ export function createEditor(initialText: string): Editor {
         this.text = this.text.slice(0, selection.start) + text + this.text.slice(selection.end);
       } else {
         this.text = this.text + text;
+      }
+    },
+    removeCharPointAt(index: number) {
+      if (textarea) {
+        this.text = [...this.text].toSpliced(index, 1).join('');
+      }
+    },
+    removeCharPointAtCluster(clusterIndex: number, charPointIndex: number) {
+      if (this.selectedText && this.selection !== null) {
+        const clusters = segment(this.selectedText);
+        const charPointsBefore = clusters.slice(0, clusterIndex).reduce((acc, seg) => acc + [...seg].length, 0);
+
+        this.text =
+          this.text.slice(0, this.selection.start) +
+          [...this.selectedText].toSpliced(charPointsBefore + charPointIndex, 1).join('') +
+          this.text.slice(this.selection.end);
+      } else {
+        const clusters = segment(this.text);
+        const charPointsBefore = clusters.slice(0, clusterIndex).reduce((acc, seg) => acc + [...seg].length, 0);
+
+        this.text = [...this.text].toSpliced(charPointsBefore + charPointIndex, 1).join('');
       }
     },
   };

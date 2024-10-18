@@ -29,6 +29,16 @@
     border: 1px solid #000;
     padding: 1rem;
     font-size: 1.5rem;
+    height: max-content;
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 5rem;
+  }
+
+  output {
+    height: calc(100% - 2rem);
   }
 
   .segment:hover {

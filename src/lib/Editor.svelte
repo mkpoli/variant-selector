@@ -1,9 +1,21 @@
 <script lang="ts">
+  let { text = $bindable(), selectedText = $bindable() }: { text: string; selectedText: string } = $props();
+  let selection = $state<{ start: number; end: number } | null>(null);
+
+  $effect(() => {
+    selectedText = selection ? text.slice(selection.start, selection.end) : '';
+  });
+
+  $inspect('selectedText', selectedText);
+
   const segmenter = new Intl.Segmenter('ja', { granularity: 'grapheme' });
-  let { text = $bindable() }: { text: string } = $props();
 </script>
 
-<textarea class="h-max resize-vertical min-h-16" bind:value={text}></textarea>
+<textarea
+  class="h-max resize-vertical min-h-16"
+  bind:value={text}
+  onselectionchange={(e) => (selection = { start: e.currentTarget.selectionStart, end: e.currentTarget.selectionEnd })}
+></textarea>
 <output class="h-full">
   {#each segmenter.segment(text) as segment}
     <span

@@ -8,3 +8,7 @@ export function isCJKUnifiedIdeograph(codePoint: number): boolean {
     return codePoint >= start && codePoint <= end;
   });
 }
+
+export function isVariationSelector(codePoint: number): boolean {
+  return (codePoint >= 0xfe00 && codePoint <= 0xfe0f) || (codePoint >= 0xe0100 && codePoint <= 0xe01ef);
+}

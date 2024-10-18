@@ -5,8 +5,6 @@
 
   let { editor }: { editor: Editor } = $props();
 
-  let selection = $state<{ start: number; end: number } | null>(null);
-
   let textarea: HTMLTextAreaElement;
   $effect(() => {
     if (textarea) {
@@ -16,13 +14,7 @@
 </script>
 
 <div class="grid grid-cols-2 gap-4">
-  <textarea
-    bind:this={textarea}
-    class="h-max resize-vertical min-h-16 font-jigmo"
-    bind:value={editor.text}
-    onselectionchange={(e) =>
-      (selection = { start: e.currentTarget.selectionStart, end: e.currentTarget.selectionEnd })}
-  ></textarea>
+  <textarea bind:this={textarea} class="h-max resize-vertical min-h-16 font-jigmo"></textarea>
   <output class="h-full">
     {#each segment(editor.text) as seg}
       <span

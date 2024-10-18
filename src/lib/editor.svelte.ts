@@ -11,6 +11,22 @@ export function createEditor(initialText: string): Editor {
   let selectedText = $derived(selection ? text.slice(selection.start, selection.end) : '');
   let textarea: HTMLTextAreaElement | undefined = $state(undefined);
 
+  $effect(() => {
+    if (textarea) {
+      textarea.value = text;
+      textarea?.addEventListener('selectionchange', () => {
+        if (textarea) {
+          selection = { start: textarea.selectionStart, end: textarea.selectionEnd };
+        }
+      });
+      textarea.addEventListener('input', () => {
+        if (textarea) {
+          text = textarea.value;
+        }
+      });
+    }
+  });
+
   return {
     get textarea() {
       return textarea;

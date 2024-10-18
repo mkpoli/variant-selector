@@ -2,8 +2,8 @@
   import Editor from '$lib/Editor.svelte';
   import { segment, codePoints } from '$lib/text';
   import { createEditor } from '$lib/editor.svelte';
+  import VariableSelectorInputButton from '$lib/VariantSelectorInputButton.svelte';
   import { dev } from '$app/environment';
-
   let editor = createEditor(dev ? '精󠄀清從心邪' : '');
 </script>
 
@@ -11,6 +11,13 @@
 
 <main class="max-w-screen-md mx-auto flex flex-col gap-4">
   <Editor {editor} />
+  <div>
+    <VariableSelectorInputButton
+      onclick={(codePoint) => {
+        editor.replaceSelectedText(String.fromCodePoint(codePoint));
+      }}
+    />
+  </div>
   <div class="grid grid-cols-[auto_1fr] gap-x-4 mx-auto">
     {#each segment(editor.selectedText || editor.text) as char}
       <span class="font-jigmo">{char}</span>

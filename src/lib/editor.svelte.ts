@@ -2,6 +2,7 @@ export interface Editor {
   text: string;
   selection: { start: number; end: number } | null;
   selectedText: string;
+  replaceSelectedText: (text: string) => void;
   textarea: HTMLTextAreaElement | undefined;
 }
 
@@ -54,6 +55,13 @@ export function createEditor(initialText: string): Editor {
     },
     get selectedText(): string {
       return selectedText;
+    },
+    replaceSelectedText(text: string) {
+      if (selection && textarea) {
+        this.text = this.text.slice(0, selection.start) + text + this.text.slice(selection.end);
+      } else {
+        this.text = this.text + text;
+      }
     },
   };
 }

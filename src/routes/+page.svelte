@@ -3,14 +3,14 @@
   let text = $state('精󠄀');
 </script>
 
-<h1>Variant Selector Dictionary</h1>
+<h1 class="text-center w-full text-2xl my-4">Variant Selector Dictionary</h1>
 
-<main>
-  <textarea bind:value={text}></textarea>
-  <output>
+<main class="max-w-screen-md mx-auto grid grid-cols-2 gap-4">
+  <textarea class="h-max resize-vertical min-h-16" bind:value={text}></textarea>
+  <output class="h-full">
     {#each segmenter.segment(text) as segment}
       <span
-        class="segment"
+        class="hover:bg-green-200/50"
         title={[...segment.segment]
           .map((char) => char.codePointAt(0))
           .map((code) => (code ? `U+${code.toString(16).toUpperCase()}` : ''))
@@ -22,35 +22,10 @@
   </output>
 </main>
 
-<style>
+<style lang="postcss">
   textarea,
   output {
     font-family: 'Jigmo', sans-serif;
-    border: 1px solid #000;
-    padding: 1rem;
-    font-size: 1.5rem;
-    height: max-content;
-  }
-
-  textarea {
-    resize: vertical;
-    min-height: 5rem;
-  }
-
-  output {
-    height: calc(100% - 2rem);
-  }
-
-  .segment:hover {
-    background-color: rgba(109, 255, 182, 0.265);
-  }
-
-  main {
-    max-width: 1024px;
-    margin: 0 auto;
-    padding: 1rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
+    @apply border border-black p-2 text-xl;
   }
 </style>

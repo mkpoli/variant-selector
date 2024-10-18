@@ -1,6 +1,6 @@
 <script lang="ts">
   import Editor from '$lib/Editor.svelte';
-  import { segment, codePoints } from '$lib/text';
+  import { segment, codePoints, formatCodePoint } from '$lib/text';
   import { createEditor } from '$lib/editor.svelte';
   import VariableSelectorInputButton from '$lib/VariantSelectorInputButton.svelte';
   import { dev } from '$app/environment';
@@ -23,7 +23,7 @@
       <span class="font-jigmo">{char}</span>
       <code class="flex flex-wrap gap-1">
         {#each codePoints(char) as code}
-          <span>U+{code}</span>
+          <span>{formatCodePoint(code)}</span>
         {/each}
       </code>
     {/each}

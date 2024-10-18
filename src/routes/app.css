@@ -1,0 +1,7 @@
+@font-face {
+  font-family: 'Jigmo';
+  src: url('/fonts/Jigmo.woff2') format('woff2'), url('/fonts/Jigmo2.woff2') format('woff2'),
+    url('/fonts/Jigmo3.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}

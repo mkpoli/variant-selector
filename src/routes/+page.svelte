@@ -9,7 +9,7 @@
 
 <h1 class="text-center w-full text-2xl my-4">Variant Selector Dictionary</h1>
 
-<main class="max-w-screen-md mx-auto grid grid-cols-2 gap-4">
+<main class="max-w-screen-md mx-auto flex flex-col gap-4">
   <Editor {editor} />
   <div class="grid grid-cols-2 gap-4">
     {#each segment(editor.selectedText) as char}

@@ -15,25 +15,28 @@
   });
 </script>
 
-<textarea
-  bind:this={textarea}
-  class="h-max resize-vertical min-h-16 font-jigmo"
-  bind:value={editor.text}
-  onselectionchange={(e) => (selection = { start: e.currentTarget.selectionStart, end: e.currentTarget.selectionEnd })}
-></textarea>
-<output class="h-full">
-  {#each segment(editor.text) as seg}
-    <span
-      class="hover:bg-green-200/50 font-jigmo"
-      title={[...seg]
-        .map((char) => char.codePointAt(0))
-        .map((code) => (code ? `U+${code.toString(16).toUpperCase()}` : ''))
-        .join(' ')}
-    >
-      {seg}
-    </span>
-  {/each}
-</output>
+<div class="grid grid-cols-2 gap-4">
+  <textarea
+    bind:this={textarea}
+    class="h-max resize-vertical min-h-16 font-jigmo"
+    bind:value={editor.text}
+    onselectionchange={(e) =>
+      (selection = { start: e.currentTarget.selectionStart, end: e.currentTarget.selectionEnd })}
+  ></textarea>
+  <output class="h-full">
+    {#each segment(editor.text) as seg}
+      <span
+        class="hover:bg-green-200/50 font-jigmo"
+        title={[...seg]
+          .map((char) => char.codePointAt(0))
+          .map((code) => (code ? `U+${code.toString(16).toUpperCase()}` : ''))
+          .join(' ')}
+      >
+        {seg}
+      </span>
+    {/each}
+  </output>
+</div>
 
 <style lang="postcss">
   textarea,

@@ -12,7 +12,7 @@
 <main class="max-w-screen-md mx-auto flex flex-col gap-4">
   <Editor {editor} />
   <div class="grid grid-cols-2 gap-4">
-    {#each segment(editor.selectedText) as char}
+    {#each segment(editor.selectedText || editor.text) as char}
       <span class="font-jigmo">{char}</span>
       <code class="flex flex-wrap gap-1">
         {#each codePoints(char) as code}

@@ -1,5 +1,5 @@
 <script lang="ts">
-  const segmenter = new Intl.Segmenter('en', { granularity: 'word' });
+  const segmenter = new Intl.Segmenter('ja', { granularity: 'grapheme' });
   let { text = $bindable() }: { text: string } = $props();
 </script>
 

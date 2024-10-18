@@ -9,7 +9,8 @@
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
     "fonts:download": "curl -o fonts/fonts.zip https://kamichikoichi.github.io/jigmo/Jigmo-20230816.zip && unzip -o fonts/fonts.zip -d fonts && rm fonts/fonts.zip",
-    "fonts:compile": "woff2_compress fonts/Jigmo-20230816/Jigmo.ttf && woff2_compress fonts/Jigmo-20230816/Jigmo2.ttf && woff2_compress fonts/Jigmo-20230816/Jigmo3.ttf && mv fonts/Jigmo-20230816/*.woff2 static/fonts"
+    "fonts:compile": "woff2_compress fonts/Jigmo-20230816/Jigmo.ttf && woff2_compress fonts/Jigmo-20230816/Jigmo2.ttf && woff2_compress fonts/Jigmo-20230816/Jigmo3.ttf && mv fonts/Jigmo-20230816/*.woff2 static/fonts",
+    "unicode:unified-ideographs": "bun unicode/compile.ts"
   },
   "devDependencies": {
     "@melt-ui/pp": "^0.3.2",

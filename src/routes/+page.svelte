@@ -4,6 +4,7 @@
   import { createEditor } from '$lib/editor.svelte';
   import VariableSelectorInputButton from '$lib/VariantSelectorInputButton.svelte';
   import { dev } from '$app/environment';
+  import { isCJKUnifiedIdeograph } from '$lib/unicode';
   let editor = createEditor(dev ? '精󠄀清從心邪' : '');
 </script>
 
@@ -18,14 +19,20 @@
       }}
     />
   </div>
-  <div class="grid grid-cols-[auto_1fr] gap-x-4 mx-auto">
+  <div class="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 mx-auto">
     {#each segment(editor.selectedText || editor.text) as char}
       <span class="font-jigmo">{char}</span>
       <code class="flex flex-wrap gap-1">
         {#each codePoints(char) as code}
-          <span>{formatCodePoint(code)}</span>
+          <span class="px-1" class:unified-ideograph={isCJKUnifiedIdeograph(code)}>{formatCodePoint(code)}</span>
         {/each}
       </code>
     {/each}
   </div>
 </main>
+
+<style lang="postcss">
+  .unified-ideograph {
+    @apply bg-blue-200;
+  }
+</style>

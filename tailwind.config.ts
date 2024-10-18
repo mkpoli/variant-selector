@@ -8,6 +8,9 @@ export default {
       fontFamily: {
         jigmo: ['Jigmo', 'sans-serif'],
       },
+      fontSize: {
+        '2xs': '0.625rem',
+      },
     },
   },
 

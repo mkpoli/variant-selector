@@ -1,23 +1,28 @@
 <script lang="ts">
   import { segment } from '$lib/text';
 
-  let { text = $bindable(), selectedText = $bindable() }: { text: string; selectedText: string } = $props();
+  import type { Editor } from '$lib/editor.svelte';
+
+  let { editor }: { editor: Editor } = $props();
+
   let selection = $state<{ start: number; end: number } | null>(null);
 
+  let textarea: HTMLTextAreaElement;
   $effect(() => {
-    selectedText = selection ? text.slice(selection.start, selection.end) : '';
+    if (textarea) {
+      editor.textarea = textarea;
+    }
   });
-
-  $inspect('selectedText', selectedText);
 </script>
 
 <textarea
+  bind:this={textarea}
   class="h-max resize-vertical min-h-16 font-jigmo"
-  bind:value={text}
+  bind:value={editor.text}
   onselectionchange={(e) => (selection = { start: e.currentTarget.selectionStart, end: e.currentTarget.selectionEnd })}
 ></textarea>
 <output class="h-full">
-  {#each segment(text) as seg}
+  {#each segment(editor.text) as seg}
     <span
       class="hover:bg-green-200/50 font-jigmo"
       title={[...seg]
